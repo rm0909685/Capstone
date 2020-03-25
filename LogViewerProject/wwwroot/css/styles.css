@@ -1,0 +1,197 @@
+/****
+
+STYLES FOR HEADER
+
+****/
+
+header {
+	/*border-bottom: solid darkblue 15px;*/
+	margin: 0px 0px 5px 0px;
+	background-color: white;
+	
+}
+
+h1 {
+	font-family: "Arial Bold", sans-serif;
+	font-weight: bold;
+	color: darkblue;
+	text-align: center;
+	margin-top: 0px;
+	padding: 15px;
+}
+
+/****
+
+STYLES FOR SELECT FILE BUTTON AND FILEPATH LINK
+
+****/
+
+#selectFile {
+	height: 50px;
+	background-color: darkblue;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+
+#selectFile > p {
+	float: right;
+	text-align: center;
+}
+
+#btSelectFile {
+	border: none;
+	background-color: white;
+	font-weight: bold;
+	border-radius: 4px;
+	text-align: center;
+	font-size: 1.5em;
+	margin: 10px
+
+}
+
+/****
+
+STYLES FOR MAIN GRID AND BODY
+
+****/
+
+body {
+	background-color:  #f2f2f2;
+}
+
+.container {
+	width: 900px;
+}
+
+.row {
+	
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin-bottom: 15px;
+	padding: 15px;
+}
+
+.col-sm {
+	
+	padding: 5px;
+	margin: 5px;
+}
+
+p, li {
+	font-family: Arial, serif;
+}
+
+
+
+/****
+
+STYLES FOR SEARCH BAR
+Source: W3 Schools
+
+****/
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: darkgray;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: darkblue;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+/****
+
+STYLES FOR TABS THAT DISPLAY FILE CONTENT/SEARCH RESULTS
+
+****/
+
+
+/****
+
+STYLES FOR FILE TREE
+
+****/
+
+#fileTreeView {
+	overflow: auto;
+	height: 250px;
+	resize: both;
+	/*cursor: move;
+	position: absolute;*/
+}
+
+/* Remove default bullets */
+ul, #myUL {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+
+
+
+
