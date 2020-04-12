@@ -1,4 +1,4 @@
-/****
+ /****
 
 STYLES FOR HEADER
 
@@ -7,14 +7,14 @@ STYLES FOR HEADER
 header {
 	/*border-bottom: solid darkblue 15px;*/
 	margin: 0px 0px 5px 0px;
-	background-color: white;
-	
+	background-color: #000066;
+	text-align: center;
 }
 
-h1 {
-	font-family: "Arial Bold", sans-serif;
+header > h1 {
+	font-family: Arial, sans-serif;
 	font-weight: bold;
-	color: darkblue;
+	color: white;
 	text-align: center;
 	margin-top: 0px;
 	padding: 15px;
@@ -28,27 +28,35 @@ STYLES FOR SELECT FILE BUTTON AND FILEPATH LINK
 
 #selectFile {
 	height: 50px;
-	background-color: darkblue;
-	text-align: center;
-	margin-top: 15px;
-	margin-bottom: 20px;
+	background-color: #f2f2f2;
 }
 
 #selectFile > p {
-	float: right;
+	float: left;
 	text-align: center;
+	font-weight: bold;
+	font-size: 1.2em;
 }
 
 #btSelectFile {
-	border: none;
-	background-color: white;
-	font-weight: bold;
-	border-radius: 4px;
-	text-align: center;
 	font-size: 1.5em;
-	margin: 10px
-
+	padding: 10px;
 }
+
+input[type="file"] {
+	text-align: center;
+	
+}
+
+
+
+.icon {
+	display: inline-block;
+	line-height: 30px;
+	padding-left: 30px;
+	background: url("images/select_file.png") no-repeat scroll 0 0 transparent;
+}
+
 
 /****
 
@@ -57,17 +65,15 @@ STYLES FOR MAIN GRID AND BODY
 ****/
 
 body {
-	background-color:  #f2f2f2;
+	background-image: linear-gradient(to right, #000080, #6666ff);
+	margin: 0;
+	padding: 0;
 }
 
-.container {
-	width: 900px;
-}
+
 
 .row {
 	
-	background-color: white;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	margin-bottom: 15px;
 	padding: 15px;
 }
@@ -136,24 +142,46 @@ STYLES FOR TABS THAT DISPLAY FILE CONTENT/SEARCH RESULTS
 
 ****/
 
+#displayContent {
+	margin: 25px;
+	padding: 10px;
+	padding-left: 25px;
+	max-width: 45%;
+	overflow: auto;
+	resize: both;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#tabs {
+	padding-top: 10px;
+}
 
 /****
 
 STYLES FOR FILE TREE
 
 ****/
-
 #fileTreeView {
 	overflow: auto;
+	margin: 25px;
+	padding: 10px;
 	height: 250px;
 	resize: both;
+	max-width: 45%;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	/*cursor: move;
 	position: absolute;*/
 }
 
 /* Remove default bullets */
-ul, #myUL {
-  list-style-type: none;
+ul {
+  list-style-type: disc;
+}
+
+form.example {
+	padding-top: 10px;
 }
 
 /* Remove margins and padding from the parent ul */
@@ -190,6 +218,15 @@ ul, #myUL {
 .active {
   display: block;
 }
+
+#displayEventViewer {
+	background-color: white;
+}
+
+footer {
+	background-color: #f2f2f2;
+}
+
 
 
 

@@ -15,7 +15,9 @@ FILE TREE FUNCTIONALITY
 
 ****/
 
+
 document.getElementById("filepicker").addEventListener("change", function (event) {
+    console.log("File display is being called");
     let output = document.getElementById("listing");
     let files = event.target.files;
 
@@ -26,16 +28,16 @@ document.getElementById("filepicker").addEventListener("change", function (event
     };
 }, false);
 
-var toggler = document.getElementsByClassName("caret");
-var i;
+//var toggler = document.getElementsByClassName("caret");
+//var i;
 
-for (i = 0; i < toggler.length; i++) {
-  toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
+//for (i = 0; i < toggler.length; i++) {
+//  toggler[i].addEventListener("click", function() {
+//    this.parentElement.querySelector(".nested").classList.toggle("active");
+//    this.classList.toggle("caret-down");
 	
-  });
-}
+//  });
+//}
 
 /****
 

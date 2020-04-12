@@ -4,119 +4,69 @@
     ViewData["Title"] = "Home page";
 }
 
-    <div class="container">
-        <div id="selectFile">
-            <button id="btSelectFile" onClick="onBtSelectFileClick()">
-                <img src="images/select_file.png">  Select Log File
-            </button>
-            <a>C://Example/FakeLinkFileName.txt</a>
-            <input type="file" id="filepicker" name="fileList" accept =".png" webkitdirectory multiple />
-            <ul id="listing"></ul>
-        </div>
 
-        <!--
+
+<div class="container">
+    <!--
 
     FILE TREE VIEW - DISPLAYS FILES USER SELECTED FROM SELECT LOG FILE BUTTON
 
      -->
 
-        <div class="row" id="fileTreeView">
-            <div class=".col-sm">
-                <!-- Load icon library -->
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="row">
+        <div class="col-md" id="fileTreeView">
+            <!--SEARCH BUTTON-->
+            <!-- Load icon library -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-                <!-- The form -->
-                <form class="example" action="action_page.php">
-                    <input type="text" placeholder="Search selected files..." name="search" id="searchInputField">
-                    <button type="submit" id="btSearch"><i class="fa fa-search"></i></button>
-                </form>
+            <!-- The form -->
+            <form class="example" action="action_page.php">
+                <input type="text" placeholder="Search selected files..." name="search" id="searchInputField">
+                <button type="submit" id="btSearch" onclick="fileInputControlChangeEventHandler()"><i class="fa fa-search"></i></button>
+            </form><!--End Search Button-->
+            <button id="btOpenFile">Open First File</button>
+            <ul id="listing"></ul>
 
-                <ul id="myUL">
-                    <li>
-                        <span class="caret">Beverages</span>
-                        <ul class="nested">
-                            <li>Water</li>
-                            <li>Coffee</li>
-                            <li>
-                                <span class="caret">Tea</span>
-                                <ul class="nested">
-                                    <li>Black Tea</li>
-                                    <li>White Tea</li>
-                                    <li>
-                                        <span class="caret">Green Tea</span>
-                                        <ul class="nested">
-                                            <li>Sencha</li>
-                                            <li>Gyokuro</li>
-                                            <li>Matcha</li>
-                                            <li>Pi Lo Chun</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        </div>  <!-- END OF FILE TREE CELL -->
 
 
         <!--
 
-    TABS - DISPLAY CONTENT AND SEARCH RESULTS
+        TABS - DISPLAY CONTENT AND SEARCH RESULTS
 
-     -->
+         -->
 
-
-        <div class="row" id="displayContent">
-            <div class=".col-sm">
-                <div class="w3-bar w3-black">
-                    <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>
-                    <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Paris</button>
-                    <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Tokyo</button>
-                </div>
-                <div id="London" class="w3-display-container">
-                    <span onclick="this.parentElement.style.display='none'"
-                          class="w3-button w3-display-topright">X</span>
-                    <h2>London</h2>
-                    <p>London is the capital city of England.</p>
-                </div>
-
-                <div id="Paris" class="city" style="display:none">
-                    <h2>Paris</h2>
-                    <p>Paris is the capital of France.</p>
-                </div>
-
-                <div id="Tokyo" class="city" style="display:none">
-                    <h2>Tokyo</h2>
-                    <p>Tokyo is the capital of Japan.</p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut aliquam purus sit amet. Vel fringilla est ullamcorper eget nulla facilisi etiam dignissim. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Augue mauris augue neque gravida in fermentum et. Nisi vitae suscipit tellus mauris a diam maecenas. Dignissim convallis aenean et tortor. Sit amet purus gravida quis. Ligula ullamcorper malesuada proin libero nunc consequat. Sollicitudin tempor id eu nisl nunc mi ipsum. Facilisi nullam vehicula ipsum a arcu. Fermentum iaculis eu non diam phasellus vestibulum lorem sed. Eget nulla facilisi etiam dignissim. Morbi tristique senectus et netus et malesuada.
-                    </p>
-                </div>
-
-
-
+        <div class="col-md" id="displayContent">
+            <div class="w3-bar w3-black" id="tabs">
+                <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>
+                <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Paris</button>
+                <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Tokyo</button>
             </div>
-        </div>
+            <div id="London" class="w3-display-container">
+                <textarea rows="20" id="preview"></textarea>
+            </div>
 
+            <div id="Paris" class="city" style="display:none">
+                <h2>Paris</h2>
+                <p>Paris is the capital of France.</p>
+            </div>
 
-
-        <!--
-
-    EVENT VIEWER FOR SELECTED LOG FILE
-
-    -->
-        <div class="row" id="displayEventViewer">
-            <div class="col-sm">
-                <p>Display Event Viewer here</p>
+            <div id="Tokyo" class="city" style="display:none">
+                <h2>Tokyo</h2>
+                <p>Tokyo is the capital of Japan.</p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut aliquam purus sit amet. Vel fringilla est ullamcorper eget nulla facilisi etiam dignissim. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Augue mauris augue neque gravida in fermentum et. Nisi vitae suscipit tellus mauris a diam maecenas. Dignissim convallis aenean et tortor. Sit amet purus gravida quis. Ligula ullamcorper malesuada proin libero nunc consequat. Sollicitudin tempor id eu nisl nunc mi ipsum. Facilisi nullam vehicula ipsum a arcu. Fermentum iaculis eu non diam phasellus vestibulum lorem sed. Eget nulla facilisi etiam dignissim. Morbi tristique senectus et netus et malesuada.
                 </p>
             </div>
+        </div> <!--END OF DISPLAY CONTENT CELL-->
 
-        </div>
-        <script type="text/javascript" src="~/js/script.js"></script>
-    </div>
 
+
+    </div> <!-- END OF ROW 1 -->
+
+
+ 
+    
+</div>
 
 

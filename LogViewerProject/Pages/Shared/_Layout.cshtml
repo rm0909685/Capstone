@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LogViewerProject</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/styles.css" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Latest compiled and minified CSS -->
@@ -16,17 +15,20 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/styles.css" />
     <link rel="icon" href="~/images/select_file.png">
 </head>
 <body>
     <header>
 
+        <h1 class="icon">Log Viewer</h1>
+        <div id="selectFile">
+            <label id="btSelectFile">
+                Select File
+                <input value="Select Log File" type="file" id="filepicker" name="fileList" multiple  />
+            </label>
 
-     
-
-
-        <h1 id="testID">Log Viewer</h1>
-        
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -43,7 +45,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-   
+    <script src="~/js/script.js"></script>
+
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>
