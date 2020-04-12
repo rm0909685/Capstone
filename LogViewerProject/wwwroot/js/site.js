@@ -1,7 +1,9 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your Javascript code.
+var files;
+var fileContents = document.getElementById("fileContents");
+var fileList = document.getElementById("fileList");
 
 
 
@@ -26,7 +28,8 @@ $(document).ready(function () {
 });
 
 
-
+/** OLD CODE
+ 
 document.getElementById("filepicker").addEventListener("change", function (event) {
     let output = document.getElementById("listing");
     let files = event.target.files;
@@ -49,8 +52,110 @@ function fileInputControlChangeEventHandler(event) {
     }
     fileReader.readAsText(files[0]);
 }
+**/
 
 
+//This function creates a check box for reach file and creates a label that's the filename
+
+// Check for the various File API support.
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+    // Great success! All the File APIs are supported.
+} else {
+    alert('The File APIs are not fully supported in this browser.');
+}
+
+
+
+function handleFileSelect(evt) {
+    files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+
+    for (var i = 0, f; f = files[i]; i++) {
+        output.push('<strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+            f.size, ' bytes, last modified: ',
+            f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a'
+        );
+
+
+        var chk = document.createElement('input');  // CREATE CHECK BOX.
+
+        chk.setAttribute('type', 'checkbox');       // SPECIFY THE TYPE OF ELEMENT.
+        chk.setAttribute('id', i);     // SET UNIQUE ID.
+        chk.setAttribute('value', i);
+        chk.setAttribute('name', 'products');
+
+        var lbl = document.createElement('label');  // CREATE LABEL.
+        lbl.setAttribute('for', i);
+        lbl.setAttribute('id', 'lbl' + i);
+        var lblID = 'lbl' + i;
+
+        // CREATE A TEXT NODE AND APPEND IT TO THE LABEL.
+        lbl.appendChild(document.createTextNode(files[i].name));
+
+        fileList.appendChild(chk);
+        fileList.appendChild(lbl);
+        fileList.appendChild(document.createElement("br"));
+
+        //Display the Versions file
+        if (files[i].name == 'Versions.txt') {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var contents = event.target.result;
+                document.getElementById("versions").innerHTML = contents;
+            };
+
+            reader.onerror = function (event) {
+                console.error("File could not be read! Code " + event.target.error.code);
+            };
+
+            reader.readAsText(files[i]);
+        } //end of display Versions file
+    }
+
+}
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+
+//This function reads a file and displays its contents when the corresponding check box is selected
+
+$(document).on('change', '[type=checkbox]', function (event) {
+
+
+    var fileType = $(":checkbox").val().split('.').pop();
+
+
+    //read and display file if check box is selected
+
+    if (event.target.checked) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            fileContents.style.visibility = 'visible';
+            var contents = event.target.result;
+            fileContents.innerHTML = contents;
+        };
+
+        reader.onerror = function (event) {
+            console.error("File could not be read! Code " + event.target.error.code);
+        };
+
+        if (files[this.id].type.match('image.*')) {
+            reader.readAsDataURL(files[this.id]);
+        } else {
+            reader.readAsText(files[this.id]);
+        }
+
+        //Hide content when checkbox is cleared
+    } else if (!event.target.checked) {
+
+        fileContents.style.visibility = 'hidden';
+
+    }
+
+
+});
 
 
 /****
