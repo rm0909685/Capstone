@@ -23,12 +23,14 @@ FILE TREE FUNCTIONALITY
 
 ****/
 
+
+/** OLD CODE
 $(document).ready(function () {
     $("#btOpenFile").on("change", fileInputControlChangeEventHandler);
 });
 
 
-/** OLD CODE
+
  
 document.getElementById("filepicker").addEventListener("change", function (event) {
     let output = document.getElementById("listing");
@@ -123,34 +125,76 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 
 $(document).on('change', '[type=checkbox]', function (event) {
 
-
-    var fileType = $(":checkbox").val().split('.').pop();
-
+    var fileType = $(':checkbox').val().split('.').pop();
+    var tabContent = document.createElement('div');
 
     //read and display file if check box is selected
 
     if (event.target.checked) {
         var reader = new FileReader();
+
+
+        //1. create li and append to ul id = nav nav-pills
+        var tabName = document.createElement('li');
+        document.querySelector('ul').appendChild(tabName);
+
+        //a. id = "li" + files[(this.id)];
+        tabName.setAttribute('id', 'li' + files[this.id]);
+
+        //2. creat a inside of li element and append to li id
+        var tabLink = document.createElement('a');
+        tabName.appendChild(tabLink);
+
+        //a. innerHTML = this.name
+        tabLink.innerHTML = files[this.id].name;
+
+        //b. class = "active"
+        tabName.setAttribute('class', 'active');
+
+        //c. href= "div" + files[(this.id)];	
+        tabLink.setAttribute('href', '#div' + files[this.id]);
+
+        //d. data-toggle="pill"
+        tabLink.setAttribute('data-toggle', 'pill');
+
+        var tabClose = document.createElement('span');
+        tabClose.innerHTML = ' X';
+        tabClose.setAttribute('onclick', 'this.parentElement.style.display="none"');
+        tabLink.insertAdjacentHTML('afterend', tabClose);
+
+        //3. create a div and append to div id="tabContainer"
+        document.getElementById('displayContent').appendChild(tabContent);
+
+        //a. id="div" + files[(this.id)]
+        tabContent.setAttribute('div', 'li' + files[this.id]);
+
+        //b. class="tab-pane fade in active"
+        tabContent.setAttribute('class', 'tab-pane fade in active');
+
+        //c. innerHTML = file contents
+
         reader.onload = function (event) {
-            fileContents.style.visibility = 'visible';
+            tabContent.style.visibility = 'visible';
             var contents = event.target.result;
-            fileContents.innerHTML = contents;
+            tabContent.innerHTML = contents;
         };
 
         reader.onerror = function (event) {
             console.error("File could not be read! Code " + event.target.error.code);
         };
 
-        if (files[this.id].type.match('image.*')) {
+        reader.readAsDataURL(files[this.id]);
+
+        /**if(files[this.id].type.match('image.*')) {
             reader.readAsDataURL(files[this.id]);
         } else {
             reader.readAsText(files[this.id]);
-        }
+        }**/
 
         //Hide content when checkbox is cleared
     } else if (!event.target.checked) {
 
-        fileContents.style.visibility = 'hidden';
+        tabContent.style.visibility = 'hidden';
 
     }
 
@@ -170,16 +214,6 @@ function fileInfo() {
     var fileModifiedDate = document.getElementByID('filepicker').files[0].lastModifiedDate;
 }
 
-//var toggler = document.getElementsByClassName("caret");
-//var i;
-
-//for (i = 0; i < toggler.length; i++) {
-//  toggler[i].addEventListener("click", function() {
-//    this.parentElement.querySelector(".nested").classList.toggle("active");
-//    this.classList.toggle("caret-down");
-
-//  });
-//}
 
 /****
 
@@ -207,61 +241,4 @@ function openCity(cityName) {
     }
     document.getElementById(cityName).style.display = "block";
 }
-
-
-/*
-*
-*
-CODE TO MAKE DIV DRAGGABLE
-
-
-// Make the DIV element draggable:
-dragElement(document.getElementById("fileTreeView"));
-
-
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
-
-
-*
-*/
 
