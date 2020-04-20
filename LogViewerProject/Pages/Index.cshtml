@@ -19,7 +19,6 @@
             <!-- Load icon library -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-            <!-- The form -->
             <form class="example" action="action_page.php">
                 <input type="text" placeholder="Search selected files..." name="search" id="searchInputField">
                 <button type="submit" id="btSearch" onclick="fileInputControlChangeEventHandler()"><i class="fa fa-search"></i></button>
@@ -28,25 +27,25 @@
             <div id="fileList"></div>
 
         </div>  <!-- END OF FILE TREE CELL -->
-        <!--
+      
+    <!--
 
     TABS - DISPLAY CONTENT AND SEARCH RESULTS
 
      -->
 
-        <div class="col-md container" id= "tabContainer">
-             <ul class="nav nav-pills">
-                
-            </ul>
+        <div class="col-md container tab">
+          
+            <div class="tab-content tab" id="navBar"></div>
 
-            <div class="tab-content">
-                
-            </div>
+            <div id="displayFileContent"></div>
+
         </div>
         <!--END OF DISPLAY CONTENT CELL-->
+    
 
     </div> <!-- END OF ROW 1 -->
+
+    
     
 </div>
-
-
