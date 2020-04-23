@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 var files;
+var contentArr = [];
 var fileContents = document.getElementById("fileContents");
 var fileList = document.getElementById("fileList");
 var displayFileContent = document.getElementById('displayFileContent');
@@ -9,9 +10,7 @@ var displayFileContent = document.getElementById('displayFileContent');
 
 
 /****
-
 SELECT FILES BUTTON FUNCTIONALITY
-
 ****/
 
 //Make content hidden until button is clicked
@@ -19,9 +18,7 @@ SELECT FILES BUTTON FUNCTIONALITY
 
 
 /****
-
 FILE TREE FUNCTIONALITY
-
 ****/
 
 
@@ -39,7 +36,7 @@ function handleFileSelect(evt) {
 
     //clear any previously selected files
     document.getElementById('fileList').innerHTML = '';
-  //  document.getElementById('tabContainer').innerHTML = '';
+    //  document.getElementById('tabContainer').innerHTML = '';
 
     // files is a FileList of File objects. List some properties.
     var output = [];
@@ -50,14 +47,29 @@ function handleFileSelect(evt) {
             f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a'
         );
 
-    
+       // files = evt.target.files;
+        window.array = []
+        if (files) {
+                var r = new FileReader();
+                r.onload = (function (f) {
+                    return function (e) {
+                        var contents = e.target.result;
+                        window.array.push(contents);
+                        contentArr.push({ name: f.name, contents: contents }); // storing as object
+                    };
+                })(f);
+                r.readAsText(f);
+                       
+        } else {
+            alert("Failed to load files");
+        }
 
- 
+
 
         var chk = document.createElement('input');  // CREATE CHECK BOX.
 
-        chk.setAttribute('type', 'checkbox');     
-        chk.setAttribute('id', i);     
+        chk.setAttribute('type', 'checkbox');
+        chk.setAttribute('id', i);
         chk.setAttribute('value', i);
         chk.setAttribute('name', 'products');
 
@@ -76,7 +88,7 @@ function handleFileSelect(evt) {
         //Display the Versions file
         if (files[i].name == 'Versions.txt') {
             document.getElementById(this.id).checked = true;
-        } 
+        }
     }
 
 }
@@ -94,7 +106,7 @@ $(document).on('change', '[type=checkbox]', function (event) {
 
     if (event.target.checked) {
         var reader = new FileReader();
-        
+
         var btTabName = document.createElement('input');
 
         btTabName.setAttribute('class', 'tablinks');
@@ -107,14 +119,14 @@ $(document).on('change', '[type=checkbox]', function (event) {
         var tabClose = document.createElement('span');
         tabClose.innerHTML = ' X';
         tabClose.setAttribute('onclick', 'this.parentElement.style.display="none"');
-     
-        
+
+
 
         reader.onload = function (event) {
-            
+
             var contents = event.target.result;
             displayFileContent.innerHTML = contents;
-           
+
         };
 
         reader.onerror = function (event) {
@@ -122,8 +134,8 @@ $(document).on('change', '[type=checkbox]', function (event) {
         };
 
         reader.readAsText(files[this.id]);
-      //  document.getElementById('testDiv').appendChild(tabContent);
-      
+        //  document.getElementById('testDiv').appendChild(tabContent);
+
 
         /**if(files[this.id].type.match('image.*')) {
             reader.readAsDataURL(files[this.id]);
@@ -143,9 +155,7 @@ $(document).on('change', '[type=checkbox]', function (event) {
 
 
 /****
-
 SEARCH BUTTON FUNCTIONALITY
-
 ****/
 
 var searchTextEntered = document.getElementById("searchInputField");
@@ -155,10 +165,7 @@ searchTextEntered.addEventListener("focus", function () {
 
 
 /****
-
 TABS THAT DISPLAY FILE CONTENT FUNCTIONALITY
-
-
 ****/
 
 function openFile(evt) {
@@ -172,32 +179,14 @@ function openFile(evt) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-
-
-    var reader = new FileReader();
-    reader.onload = function (event) {
-       // fileContents.style.visibility = 'visible';
-        var contents = event.target.result;
-        displayFileContent.innerHTML = contents;
-    };
-
-    reader.onerror = function (event) {
-        console.error("File could not be read! Code " + event.target.error.code);
-    };
-
     /**if(files[this.id].type.match('image.*')) {
         reader.readAsDataURL(files[this.id]);
     } else {
         reader.readAsText(files[this.id]);
     }**/
 
-    reader.readAsText(files[btID]);
-
-
-
-    
-   // tabContent.style.display = "block";
-   // displayFileContent.innerHTML = files[btID];
-    evt.currentTarget.className += " active"; 
+    // tabContent.style.display = "block";
+  
+    displayFileContent.innerHTML = contentArr[btID].contents;
+    evt.currentTarget.className += " active";
 }
-

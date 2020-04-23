@@ -206,13 +206,14 @@ STYLES FOR TABS THAT DISPLAY FILE CONTENT/SEARCH RESULTS
 	}
 
 /* Style the tab content */
-#displayFileContent {
+.tabcontent {
 	display: none;
 	padding: 6px 12px;
 	border: 1px solid #ccc;
 	border-top: none;
 	overflow: auto;
 }
+
 
 
 form.example {
