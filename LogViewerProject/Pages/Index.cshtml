@@ -6,7 +6,7 @@
 
 
 
-<div class="container">
+
     <!--
 
     FILE TREE VIEW - DISPLAYS FILES USER SELECTED FROM SELECT LOG FILE BUTTON
@@ -16,14 +16,12 @@
     <div class="row">
         <div class="col-md" id="fileTreeView">
             <!--SEARCH BUTTON-->
-            <!-- Load icon library -->
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <form class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input id ="searchInputField" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                       aria-label="Search" disabled>
+            </form>
 
-            <form class="example" action="action_page.php">
-                <input type="text" placeholder="Search selected files..." name="search" id="searchInputField">
-                <button type="submit" id="btSearch" onclick="fileInputControlChangeEventHandler()"><i class="fa fa-search"></i></button>
-            </form><!--End Search Button-->
-            
             <div id="fileList"></div>
 
         </div>  <!-- END OF FILE TREE CELL -->
@@ -45,7 +43,6 @@
     
 
     </div> <!-- END OF ROW 1 -->
+<h2>Test Div</h2>
+<div id="testDiv"></div>
 
-    
-    
-</div>

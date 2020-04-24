@@ -102,48 +102,18 @@ p, li {
 
 /****
 
-STYLES FOR SEARCH BAR
-Source: W3 Schools
+STYLES FOR BOOTSTRAP SEARCH BAR
 
 ****/
 
-* {
-  box-sizing: border-box;
+
+
+.active-pink-2 input.form-control[type=text]:focus:not([readonly]) {
+	border-bottom: 1px solid #f48fb1;
+	box-shadow: 0 1px 0 0 #f48fb1;
 }
 
-/* Style the search field */
-form.example input[type=text] {
-  padding: 10px;
-  font-size: 17px;
-  border: 1px solid grey;
-  float: left;
-  width: 80%;
-  background: #f1f1f1;
-}
 
-/* Style the submit button */
-form.example button {
-  float: left;
-  width: 20%;
-  padding: 10px;
-  background: darkgray;
-  color: white;
-  font-size: 17px;
-  border: 1px solid grey;
-  border-left: none; /* Prevent double borders */
-  cursor: pointer;
-}
-
-form.example button:hover {
-  background: darkblue;
-}
-
-/* Clear floats */
-form.example::after {
-  content: "";
-  clear: both;
-  display: table;
-}
 
 /****
 
@@ -168,6 +138,10 @@ STYLES FOR TABS THAT DISPLAY FILE CONTENT/SEARCH RESULTS
 
 ****/
 
+
+#displayFileContent {
+	overflow: auto;
+}
 
 #navBar {
 	overflow-x: auto;
