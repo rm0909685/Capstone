@@ -6,7 +6,6 @@ var contentArr = [];
 var fileContents = document.getElementById("fileContents");
 var fileList = document.getElementById("fileList");
 var displayFileContent = document.getElementById('displayFileContent');
-zip.workerScriptsPath = 'js/';
 
 
 
@@ -32,138 +31,46 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 
 
-//EXTRACT FILES
-
-(function (obj) {
-
-    var requestFileSystem = obj.webkitRequestFileSystem || obj.mozRequestFileSystem || obj.requestFileSystem;
-
-    function onerror(message) {
-        alert(message);
-    }
-
-    var model = (function () {
-        var URL = obj.webkitURL || obj.mozURL || obj.URL;
-
-        return {
-            getEntries: function (file, onend) {
-                zip.createReader(new zip.BlobReader(file), function (zipReader) {
-                    zipReader.getEntries(onend);
-                }, onerror);
-            },
-            getEntryFile: function (entry, creationMethod, onend, onprogress) {
-                var writer, zipFileEntry;
-
-                function getData() {
-                    entry.getData(writer, function (blob) {
-                        var blobURL = creationMethod == "Blob" ? URL.createObjectURL(blob) : zipFileEntry.toURL();
-                        onend(blobURL);
-                    }, onprogress);
-                }
-
-                if (creationMethod == "Blob") {
-                    writer = new zip.BlobWriter();
-                    getData();
-                } else {
-                    createTempFile(function (fileEntry) {
-                        zipFileEntry = fileEntry;
-                        writer = new zip.FileWriter(zipFileEntry);
-                        getData();
-                    });
-                }
-            }
-        };
-    })();
-
-    (function () {
-        var fileInput = document.getElementById("files");
-        var fileList = document.getElementById("fileList");
-
-        fileInput.addEventListener('change', function () {
-            fileInput.disabled = true;
-            model.getEntries(fileInput.files[0], function (entries) {
-                fileList.innerHTML = "";
-                var entryCount = 0;
-                entries.forEach(function (entry) {
-                    
-
-                    var chk = document.createElement('input');  // CREATE CHECK BOX
-                    chk.setAttribute('type', 'checkbox');
-                    chk.setAttribute('id', entryCount);
-                    chk.setAttribute('value', entryCount);
-                    chk.setAttribute('name', entryCount);
-
-                    var lbl = document.createElement('label');  // CREATE LABEL.
-                    lbl.setAttribute('for', entryCount);
-                    lbl.setAttribute('id', 'lbl' + entryCount);
-
-                    // CREATE A TEXT NODE AND APPEND IT TO THE LABEL.
-                    lbl.appendChild(document.createTextNode(entry.filename));
-
-                    fileList.appendChild(chk);
-                    fileList.appendChild(lbl);
-                    fileList.appendChild(document.createElement("br"));
-
-                    //Display the Versions file
-                    if (entry.filename == 'Versions.txt') {
-                        $("input[type='checkbox']").attr('checked', 'checked');
-                        $("input[type='checkbox']").trigger('change');
-                    }
-                    entryCount++;
-
-                });
-            });
-        }, false);
-    })();
-
-})(this);
-
-
-
-/**
-
 function handleFileSelect(evt) {
-    //clear any previously selected files
-   // document.getElementById('fileList').innerHTML = '';
+    //Reset page
+    document.getElementById('fileList').innerHTML = '';
     document.getElementById('navBar').innerHTML = '';
     document.getElementById('displayFileContent').innerHTML = '';
-
     $('#searchInputField').prop('disabled', false); //enable the search field
+    $('#fileSelectPrompt').remove();
 
     files = evt.target.files; // FileList object
-  
-
-    
 
 
     // files is a FileList of File objects. List some properties.
-   // var output = [];
+    var output = [];
 
     for (var i = 0, f; f = files[i]; i++) {
-      /**  output.push('<strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+        output.push('<strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
             f.size, ' bytes, last modified: ',
             f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a'
         );
 
+        // files = evt.target.files;
         window.array = []
         if (files) {
-                var r = new FileReader();
-                r.onload = (function (f) {
-                    return function (e) {
-                        var contents = e.target.result;
-                        window.array.push(contents);
-                        contentArr.push({ name: f.name, contents: contents }); // storing as object
-                    };
-                })(f);
-                r.readAsText(f);
-                       
+            var r = new FileReader();
+            r.onload = (function (f) {
+                return function (e) {
+                    var contents = e.target.result;
+                    window.array.push(contents);
+                    contentArr.push({ name: f.name, contents: contents }); // storing as object
+                };
+            })(f);
+            r.readAsText(f);
+
         } else {
             alert("Failed to load files");
         }
 
 
 
-        var chk = document.createElement('input');  // CREATE CHECK BOX
+        var chk = document.createElement('input');  // CREATE CHECK BOX.
         chk.setAttribute('type', 'checkbox');
         chk.setAttribute('id', i);
         chk.setAttribute('value', i);
@@ -172,8 +79,6 @@ function handleFileSelect(evt) {
         var lbl = document.createElement('label');  // CREATE LABEL.
         lbl.setAttribute('for', i);
         lbl.setAttribute('id', 'lbl' + i);
-
-        // CREATE A TEXT NODE AND APPEND IT TO THE LABEL.
         lbl.appendChild(document.createTextNode(files[i].name));
 
         fileList.appendChild(chk);
@@ -190,7 +95,7 @@ function handleFileSelect(evt) {
 }
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
-**/
+
 
 //This function reads a file and displays its contents when the corresponding check box is selected
 
@@ -209,7 +114,7 @@ $(document).on('change', '[type=checkbox]', function (event) {
         btTabName.setAttribute('id', 'bt' + this.id);
         btTabName.setAttribute('onclick', 'openFile(event)');
         btTabName.setAttribute('type', 'button');
-        btTabName.setAttribute('value', entry.filename);
+        btTabName.setAttribute('value', files[this.id].name);
         document.getElementById('navBar').append(btTabName);
 
         var tabClose = document.createElement('span');
@@ -244,6 +149,7 @@ $(document).on('change', '[type=checkbox]', function (event) {
         $("input[type='checkbox']").removeAttr('checked');
         $('#bt' + this.id).remove();
         $('#displayFileContent').html('');
+
     }
 
 
@@ -254,29 +160,95 @@ $(document).on('change', '[type=checkbox]', function (event) {
 SEARCH BUTTON FUNCTIONALITY
 ****/
 
-var searchTextEntered = document.getElementById('searchInputField');
 
-searchTextEntered.addEventListener("focus", function () {
-   
 
-    let input = document.getElementById('searchInputField').value;
-    input = input.toLowerCase();
-    let x = document.getElementsByClassName('fileDivContent');
+/** 
+function searchFiles() {
+    var input, i;
+    input = document.getElementById('searchInputField');
 
     for (i = 0; i < contentArr.length; i++) {
+        console.log('reached for loop');
         if (!contentArr[i].contents.toLowerCase().includes(input)) {
-            document.getElementById(i).checked = false;
+            $("input[type='checkbox']").removeAttr('checked');
+            $('#' + this.id).remove();
+            $('#bt' + this.id).remove();
+            $('#lbl' + this.id).remove();
+            $("input[type='checkbox']").trigger('change');
+            console.log('does not include input');
         }
         else {
+            console.log('includes input');
+            $("input[type='checkbox']").attr('checked', 'checked');
+            $("input[type='checkbox']").trigger('change');
+
+            if (document.body.contains(document.getElementById('bt' + this.id))) {
+                console.log('should be getting removed...');
+                $('#bt' + this.id).remove();
+            }
+
+
+
             contentArr[i].contents.replace(new RegExp(input, "gi"), (match) => '<mark>${match}</mark>');
             $("#" + this.id).attr('checked', 'checked');
             $("#" + this.id).trigger('change');
             $(input).css("background", "yellow");
             //const term; // search query we want to highlight in results 
-           // const results = ''; // search results
+            // const results = ''; // search results  *
+
         }
-    } 
-});
+    }
+
+} **/
+
+var searchTextEntered = document.getElementById('searchInputField');
+
+searchTextEntered.addEventListener("keyup", function () {
+   
+    $('#btClearSearch').attr('display', 'block');
+
+    let input = searchTextEntered.value;
+    input = input.toLowerCase();
+    
+    let x = document.getElementsByClassName('fileDivContent');
+
+    for (i = 0; i < contentArr.length; i++) {
+        console.log('reached for loop');
+        if (!contentArr[i].contents.toLowerCase().includes(input)) {
+            $("input[type='checkbox']").removeAttr('checked');
+            $('#' + this.id).remove();
+            $('#bt' + this.id).remove();
+            $('#lbl' + this.id).remove();
+            $("input[type='checkbox']").trigger('change');
+            displayFileContent.innerHTML = 'Search results not found.';
+        }
+        else {
+
+            if (document.body.contains(document.getElementById('bt' + this.id))) {
+                console.log('should be getting removed...');
+                $('#bt' + this.id).remove();
+            } 
+            (function () {
+                
+                $("input[type='checkbox']").attr('checked', 'checked');
+                $("input[type='checkbox']").trigger('change');
+            });
+            
+
+           
+
+            
+            /**
+            contentArr[i].contents.replace(new RegExp(input, "gi"), (match) => '<mark>${match}</mark>');
+            $("#" + this.id).attr('checked', 'checked');
+            $("#" + this.id).trigger('change');
+            $(input).css("background", "yellow");
+            //const term; // search query we want to highlight in results 
+            // const results = ''; // search results  **/
+
+        }
+    }
+});   
 
 
 /****
@@ -301,7 +273,7 @@ function openFile(evt) {
     }**/
 
     // tabContent.style.display = "block";
-  
+
     displayFileContent.innerHTML = contentArr[btID].contents;
     evt.currentTarget.className += " active";
 }
